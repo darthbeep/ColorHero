@@ -117,3 +117,13 @@ function heroJump() {
  		}
  	}
  }
+
+function victory() {
+	if (unlocked[0] && unlocked[1] && unlocked[2] && unlocked[3] && unlocked[4] && unlocked[5] && unlocked[6]) {
+		stage = 2;
+
+		ctx.clearRect(0, 0, 600, 600);
+		ctx.font = "24pt 'Comic Sans MS'";
+		ctx.fillText("yOU wIn", 200, 500);
+	}
+}

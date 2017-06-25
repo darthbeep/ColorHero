@@ -58,6 +58,7 @@ function update() {
 		drawHero();
 		drawOrbs();
 		showColors();
+		victory();
 	}
 
 }
