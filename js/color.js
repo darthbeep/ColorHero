@@ -1,7 +1,7 @@
 var orbs = [];
 var colors = ["gray" ,"red", "green", "blue", "cyan", "yellow", "magenta"];
-var unlocked = [true, false, false, false, false, false, false];
-var unlockedc = [true, false, false, false, false, false, false];
+var unlocked = [false, false, false, false, false, false, false];
+var unlockedc = [false, false, false, false, false, false, false];
 
 function newOrb(c, xcc, ycc) {
 	orbs.push({col: colors[c], xc: xcc, yc: ycc, vis:true, cn: c});

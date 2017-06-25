@@ -1,10 +1,18 @@
+var stage = 0;
 var ctx;
 var right = "up";
 var left = "up";
 var up = "up";
-function start() {
+
+function createCanvas() {
 	var c = document.getElementById('game');
 	ctx = c.getContext('2d');
+}
+
+function start() {
+	document.removeEventListener("click", selectColor, false);
+	stage = 1;
+	//inter();
 	groundSetup();
 }
 document.addEventListener("keydown", function(event) {
@@ -34,16 +42,28 @@ document.addEventListener("keyup", function(event) {
 })
 
 function update() {
-	heroLR();
-	heroFall();
-	heroOrb();
-	ctx.clearRect(0, 0, 600, 600);
-	drawBlocks();
-	drawHero();
-	drawOrbs();
-	showColors();
+	if (stage == 0) {
+		ctx.clearRect(0, 0, 600, 600);
+		createOptions();
+		drawBlocks();
+		sketchRect();
+	}
+	if (stage == 1) {
+		heroLR();
+		heroFall();
+		heroOrb();
+		ctx.clearRect(0, 0, 600, 600);
+		drawBlocks();
+		drawHero();
+		drawOrbs();
+		showColors();
+	}
+
 }
+
 setInterval(update, 25);
+
+
 
 function reset(add) {
 	hero.cx = currentHorizontal[0].xcor + 30;

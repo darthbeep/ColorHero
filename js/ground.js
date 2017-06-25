@@ -1,7 +1,7 @@
 var currentHorizontal = []; //Note on the name: this covers horizontal and vertical
 
 function groundSetup() {
-	level1();
+	//level1();
 	drawBlocks();
 	heroStart();
 }

@@ -1,6 +1,8 @@
 var hero;
 function heroStart() {
 	ref = currentHorizontal[0];
+	unlocked[ref.cn] = true;
+	unlockedc[ref.cn] = true;
 	hero = {
 		col: ref.col,
 		cx: ref.xcor + 20,
