@@ -27,6 +27,18 @@ function createOptions() {
 
 	ctx.font="40px Georgia";
 	ctx.fillText("start", 260, 535);
+
+	ctx.beginPath();
+	ctx.rect(10, 575, 75, 20);
+	ctx.rect(95, 575, 75, 20);
+	ctx.rect(550, 575, 40, 20);
+	ctx.stroke();
+	ctx.closePath();
+
+	ctx.font = "15px Georgia";
+	ctx.fillText("undo rect", 15, 590);
+	ctx.fillText("undo arc", 102.5, 590);
+	ctx.fillText("clear",555,590);
 }
 
 document.addEventListener("click", selectColor);
@@ -56,10 +68,37 @@ function selectColor(event) {
 	}
 
 	if (xuse > 250 && xuse < 350 && yuse > 500 && yuse < 550) {
-		start();
+		if (currentHorizontal.length > 0) {
+			start();
+		}
+
 		drawingNow = false;
 	}
+
+	if (xuse > 10 && xuse < 85 && yuse > 575 && yuse < 595) {
+		if (currentHorizontal.length > 0) {
+			currentHorizontal.pop();
+		}
+		drawingNow = false;
+	}
+
+	if (xuse > 95 && xuse < 170 && yuse > 575 && yuse < 595) {
+		if (orbs.length > 0) {
+			orbs.pop();
+		}
+		drawingNow = false;
+	}
+
+	if (xuse > 550 && xuse < 590 && yuse > 575 && yuse < 595) {
+		currentHorizontal = [];
+		orbs = [];
+		drawingNow = false;
+	}
+
 	if (drawingNow) {
+		if (cshape == "arc") {
+			orbs.push({col:ccolor, xc: xuse, yc: yuse, vis: true, cn: ccn});
+		}
 		//rectCoords[0] = xuse;
 		//rectCoords[1] = yuse;
 		//console.log(rectCoords[0]);
@@ -68,14 +107,17 @@ function selectColor(event) {
 }
 
 function finalRect(event) {
-	var ca = document.getElementById('game');
-	var rect = ca.getBoundingClientRect();
-	if (rectCoords[0] <= 0 && rectCoords[1] <= 0) {
-		rectCoords[0] = (event.clientX-rect.left)/(rect.right-rect.left)*ca.width;
-		rectCoords[1] = (event.clientY-rect.top)/(rect.bottom-rect.top)*ca.height;
-	}
-	rectCoords[2] = (event.clientX-rect.left)/(rect.right-rect.left)*ca.width;
-	rectCoords[3] = (event.clientY-rect.top)/(rect.bottom-rect.top)*ca.height;
+	if (cshape == "rect" || cshape == "arc") {
+		var ca = document.getElementById('game');
+		var rect = ca.getBoundingClientRect();
+		if (rectCoords[0] <= 0 && rectCoords[1] <= 0) {
+			rectCoords[0] = (event.clientX-rect.left)/(rect.right-rect.left)*ca.width;
+			rectCoords[1] = (event.clientY-rect.top)/(rect.bottom-rect.top)*ca.height;
+		}
+		rectCoords[2] = (event.clientX-rect.left)/(rect.right-rect.left)*ca.width;
+		rectCoords[3] = (event.clientY-rect.top)/(rect.bottom-rect.top)*ca.height;
+		}
+
 	//console.log(rectCoords);
 }
 
@@ -110,13 +152,16 @@ function getMouseY() {
 }
 
 function placeThing(event) {
-	if (Math.abs(getMouseX() - rectCoords[0]) > 10 && Math.abs(getMouseY() - rectCoords[1]) > 5) {
-		xp = Math.min(rectCoords[0], getMouseX());
-		yp = Math.min(rectCoords[1], getMouseY());
-		lp = Math.abs(getMouseX() - rectCoords[0]);
-		hp = Math.abs(getMouseY() - rectCoords[1]);
-		currentHorizontal.push({col: ccolor, xcor: xp, ycor: yp, len: lp, ht: hp, cn:ccn});
+	if (cshape == "rect") {
+		if (Math.abs(getMouseX() - rectCoords[0]) > 10 && Math.abs(getMouseY() - rectCoords[1]) > 5) {
+				xp = Math.min(rectCoords[0], getMouseX());
+				yp = Math.min(rectCoords[1], getMouseY());
+				lp = Math.abs(getMouseX() - rectCoords[0]);
+				hp = Math.abs(getMouseY() - rectCoords[1]);
+				currentHorizontal.push({col: ccolor, xcor: xp, ycor: yp, len: lp, ht: hp, cn:ccn});
+			}
 	}
+
 
 	rectCoords[0] = 0;
 	rectCoords[1] = 0;

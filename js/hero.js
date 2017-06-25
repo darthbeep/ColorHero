@@ -78,7 +78,7 @@ function heroFall() {
 				hero.cy = currentHorizontal[i].ycor-20;
 
 				if (drop) {
-					hero.cy+=30;
+					hero.cy+=10 + currentHorizontal[i].ht;
 					hero.jump = 0;
 				}
 				else {

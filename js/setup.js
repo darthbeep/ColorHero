@@ -46,6 +46,7 @@ function update() {
 		ctx.clearRect(0, 0, 600, 600);
 		createOptions();
 		drawBlocks();
+		drawOrbs();
 		sketchRect();
 	}
 	if (stage == 1) {
